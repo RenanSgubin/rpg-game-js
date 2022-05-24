@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/game.css">
+</head>
+<body>
+   <div class="container">
+       <div class="content">
+            <section class="character">
+                <!--Seta que vai inidicar de quem é a vez-->
+                <img src="../img/pixel-arrow.png" class="pixel-left-arrow">
+                <div class="character-content">
+                    <div class="char-battle-details-content">
+                        <div class="all-infos-content">
+                            <span class="name-infos">
+                                <h2 class="char-name">Hitto&nbsp;-</h2>&nbsp;
+                                <h2 class="char-type">Knight</h2>
+                            </span>
+                            <div class="level-content">
+                                <h2>Level: 30</h2>
+                            </div>
+                        </div>
+                        <img src="../img/char-battle-detail.png" class="char-battle-details">
+                    </div>
+ 
+                    <div class="class-img-content">
+                        <img src="../img/knight-front.png" class="character-img">
+                    </div>
+
+                    <!--Div para mostrar os atributos do personagem-->
+                    <section class="character-attributes">
+                        <div class="character-attributes-content">
+                            <div><span>Life:</span><span>100</span></div>
+                            <div><span>Mana:</span><span>100</span></div>
+                            <div><span>Atk:</span><span>10</span></div>
+                            <div><span>Defense:</span><span>25</span></div>
+                            <div><span>Inteli:</span><span>3</span></div>
+                            <div><span>Agility:</span><span>8</span></div>
+                        </div>
+                    </section>
+
+                    <section class="life-mana-container">
+                        <div class="life-mana-content">
+                            <span>LIFE:</span>
+                            <div class="life-bar-content">
+                                <div class="life-width"><h4>100/100</h4></div>
+                            </div>
+                        </div>
+    
+                        <div class="life-mana-content">
+                            <span>MANA:</span>
+                            <div class="mana-bar-content">
+                                <div class="mana-width"><h4>100/100</h4></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="skills-container">
+                        <div class="skills-content">
+                            <span class="skill">
+                                <img src="../img/knight-attack-1.png" class="atks-img" 
+                                onmouseover="showSkillDescription(0)"
+                                onmouseout="displayNoneSkillDescription(0)"
+                                onclick="useAttack(0)">
+                                <div class="skill-description">
+                                    <div class="skill-description-content">
+                                        Ataque básico. O Cavaleiro ataca o inimigo utilizando
+                                        sua espada.
+                                        <div>
+                                            <span>Dano: 25</span>
+                                            <span>Custo de Mana: 0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                            <span class="skill">
+                                <img src="../img/knight-attack-2.png" class="atks-img" 
+                                onmouseover="showSkillDescription(1)"
+                                onmouseout="displayNoneSkillDescription(1)"
+                                onclick="useAttack(1)">
+                                <div class="skill-description">
+                                    <div class="skill-description-content">
+                                        O cavaleiro usa seu escudo para aumentar sua 
+                                        defesa em 50% por 2 rounds.
+                                        <div>
+                                            <span>Dano: 0</span>
+                                            <span>Custo de Mana: 20</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                            <span class="skill">
+                                <img src="../img/knight-attack-3.png" class="atks-img" 
+                                onmouseover="showSkillDescription(2)"
+                                onmouseout="displayNoneSkillDescription(2)"
+                                onclick="useAttack(2)">
+                                <div class="skill-description">
+                                    <div class="skill-description-content">
+                                        O cavaleiro usa uma das poções de vidas
+                                        que ele carrega consigo, recuperando 30 pontos
+                                        de vida.
+                                        <div>
+                                            <span>Dano: 0</span>
+                                            <span>Custo de Mana: 20</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                            <span class="skill">
+                                <img src="../img/knight-attack-4.png" class="atks-img"
+                                onmouseover="showSkillDescription(3)"
+                                onmouseout="displayNoneSkillDescription(3)">
+                                <div class="skill-description">
+                                    <div class="skill-description-content">
+                                        O cavaleiro utiliza a habilidade Berseker, aumentando
+                                        sua defensa em 50% e dano em 30% por 3 rounds.
+                                        <div>
+                                            <span>Dano: 0</span>
+                                            <span>Custo de Mana: 60</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                            <span class="skill">
+                                <img src="../img/knight-attack-5.png" class="atks-img"
+                                onmouseover="showSkillDescription(4)"
+                                onmouseout="displayNoneSkillDescription(4)">
+                                <div class="skill-description">
+                                    <div class="skill-description-content">
+                                        O cavaleiro incendeia sua espada, fazendo com que ela 
+                                        passe a causar dano de fogo por 3 rounds
+                                        <div>
+                                            <span>Dano Extra: 5%</span>
+                                            <span>Custo de Mana: 40</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                            <span class="skill">
+                                <img src="../img/knight-attack-6.png" class="atks-img"
+                                onmouseover="showSkillDescription(5)"
+                                onmouseout="displayNoneSkillDescription(5)">
+                                <div class="skill-description">
+                                    <div class="skill-description-content">
+                                        O cavaleiro utiliza as trevas latentes para imbuir
+                                        sua espada, fazendo com que ela cause dano de 
+                                        trevas por 4 rounds.
+                                        <div>
+                                            <span>Dano Extra: 10%</span>
+                                            <span>Custo de Mana: 60</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                        </div>
+                    </section>
+                    <!--Div que vai aparecer quando faltar mana-->
+                    <section class="out-of-mana-container">
+                        <div class="out-of-mana">
+                            <span>!</span>
+                            Out of Mana!
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <img src="../img/vs-image.png" class="vs-img">
+            
+            <section class="enemy">
+                <!--Seta que vai inidicar de quem é a vez-->
+                <img src="../img/pixel-right-arrow.png" class="pixel-right-arrow">
+                <section class="enemy-content">
+                    <div class="character-content">
+                        <div class="char-battle-details-content">
+                            <div class="all-infos-content">
+                                <span class="name-infos">
+                                    <h2 class="char-type">Demon</h2>
+                                </span>
+                                <div class="level-content">
+                                    <h2>Level: 35</h2>
+                                </div>
+                            </div>
+                            <img src="../img/char-battle-detail.png" class="char-battle-details">
+                        </div>
+     
+                        <div class="class-img-content">
+                            <img src="../img/demon-front.png" class="character-img">
+                        </div>
+
+                        <!--Dano que vai aparecer e sumir depois de um tempo-->
+                        <span class="enemy-damage"></span>
+    
+                        <!--Div para mostrar os atributos do personagem-->
+                        <section class="enemy-attributes">
+                            <div class="character-attributes-content">
+                                <div><span>Life:</span><span>75</span></div>
+                                <div><span>Mana:</span><span>150</span></div>
+                                <div><span>Atk:</span><span>17</span></div>
+                                <div><span>Defense:</span><span>15</span></div>
+                                <div><span>Inteli:</span><span>12</span></div>
+                                <div><span>Agility:</span><span>4</span></div>
+                            </div>
+                        </section>
+    
+                        <section class="life-mana-container">
+                            <div class="life-mana-content">
+                                <span>LIFE:</span>
+                                <div class="life-bar-content">
+                                    <div class="life-width"><h4>75/75</h4></div>
+                                </div>
+                            </div>
+        
+                            <div class="life-mana-content">
+                                <span>MANA:</span>
+                                <div class="mana-bar-content">
+                                    <div class="mana-width"><h4>150/150</h4></div>
+                                </div>
+                            </div>
+                        </section>
+    
+                        <section class="skills-container">
+                            <div class="skills-content">
+                                <span class="skill">
+                                    <img src="../img/demon-attack-1.png" class="atks-img">
+                                </span>
+                                <span class="skill">
+                                    <img src="../img/demon-attack-2.png" class="atks-img">
+                                </span>
+                                <span class="skill">
+                                    <img src="../img/demon-attack-3.png" class="atks-img">
+                                </span>
+                                <span class="skill">
+                                    <img src="../img/knight-attack-4.png" class="atks-img">
+                                </span>
+                                <span class="skill">
+                                    <img src="../img/knight-attack-5.png" class="atks-img">
+                                </span>
+                                <span class="skill">
+                                    <img src="../img/knight-attack-6.png" class="atks-img">
+                                </span>
+                            </div>
+                        </section>
+    
+    
+                    </div>
+                </section>
+            </section>
+
+       </div>
+   </div>
+   <script src="../js/showSkillDescriptions.js"></script>
+   <script src="../js/battle.js"></script>
+</body>
+</html>

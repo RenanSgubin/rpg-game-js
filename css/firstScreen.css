@@ -1,0 +1,152 @@
+
+@font-face {
+  font-family: "Pixel Title";
+  src: url('../fonts/upheavtt-webfont.woff2');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  background-color: rgb(63, 63, 63);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-image: url("../img/pixel-cavern.png");
+}
+
+.pixel {
+  width: 7px;
+  height: 7px;
+  background-color: white;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.torch-left {
+  position: absolute;
+  left: 10%;
+  top: 30%;
+  width: 200px;
+}
+
+.torch-right {
+  position: absolute;
+  right: 10%;
+  top: 30%;
+  width: 200px;
+}
+
+.content {
+  width: 85%;
+  height: 70vh;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  font-family: "Pixel Title";
+  font-size: 6.5rem;
+}
+
+.title {
+  position: relative;
+  animation: moveText ease-in-out infinite 2s;
+}
+
+
+.playButton {
+  height: auto;
+  margin: 10px;
+
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  text-transform: uppercase;
+  
+  cursor: pointer;
+  
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: "Pixel Title";
+  font-size: 25px;
+}
+
+.playButton::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: -10px;
+  right: -10px;
+  background: black;
+  z-index: -1;
+}
+
+.playButton::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: -6px;
+  right: -6px;
+  background: black;
+  z-index: -1;
+}
+
+.playButton {
+  position: relative;
+  width: 270px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px;
+  background: black;
+  z-index: 2;
+  transition: 0.2s all;
+}
+
+.playButton:hover {
+  transform: scale(1.1);
+}
+
+.playButton a {
+  color: white;
+}
+
+
+
+@keyframes moveText {
+
+  0% {
+    transform: scale(1.0);
+  }
+
+  50% {
+    transform: scale(1.05)
+  }
+
+  100% {
+    transform: scale(1.0);
+  }
+
+}

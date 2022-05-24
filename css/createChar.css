@@ -1,0 +1,482 @@
+
+
+@font-face {
+    font-family: "Pixel Title";
+    src: url('../fonts/upheavtt-webfont.woff2');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+    background-color: rgb(34, 34, 34);
+    font-family: "Pixel Title";
+    /*background-image: url("../img/pixel-cavern.png");
+    background-size: 100%;*/
+}
+
+a {
+    text-decoration: none;
+    color: rgb(34, 34, 34);
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.choose-hero-container {
+    position: relative;
+    width: 40%;
+    height: 84vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(239, 238, 238);
+    color: rgb(239, 239, 239);
+    padding: 5px 2px 5px 2px;   /*  Top, Right, Bottom, Left*/
+}
+
+
+/***************Container*/
+.choose-hero-container::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: rgb(239, 238, 238);
+    z-index: -1;
+}
+  
+.choose-hero-container::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: rgb(239, 238, 238);
+    z-index: -1;
+}
+
+/****************Content****************/
+.choose-hero-content {
+    position: relative;
+    width: 99.5%;
+    height: 84.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(37, 37, 37);
+    /*padding: 0px 0px 100px 0px;   /*  Top, Right, Bottom, Left*/
+    z-index: 9999;
+}
+
+.choose-hero-content::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: rgb(37, 37, 37);
+    z-index: -1;
+}
+  
+.choose-hero-content::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: rgb(37, 37, 37);
+    z-index: -1;
+}
+
+.choose-hero-title {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heroes {
+    position: relative;
+    width: 97%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.heroes-span-border {
+    position: relative;
+    width: 28%;
+    height: 26vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 4%;
+    cursor: pointer;
+    transition: 0.2s all;
+    background-color: rgb(54, 54, 54);
+    border: 4px solid rgb(45, 45, 45);
+}
+
+.heroes-span-border:focus {
+    border: 4px solid rgb(239, 238, 238);
+    background-color: rgb(239, 238, 238);
+}
+
+.heroes span {
+    position: relative;
+    width: 95%;
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(45, 45, 45);
+    z-index: 9999;
+}
+
+.heroes span::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: rgb(45, 45, 45);
+}
+  
+.heroes span::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: rgb(45, 45, 45);
+}
+
+.heroes span:hover {
+    background-color: rgb(54, 54, 54);
+}
+
+.heroes span:hover::before {
+    background: rgb(54, 54, 54);
+}
+  
+.heroes span:hover::after {
+    background: rgb(54, 54, 54);
+}
+
+.heroes-img {
+    width: 256px;
+    z-index: 9999;
+}
+
+
+
+
+
+
+
+
+
+/*Detalhes do Herói*/
+.hero-details-container {
+    position: relative;
+    width: 40%;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(239, 238, 238);
+    margin-left: 2%;
+}
+
+.hero-details-container::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: rgb(239, 238, 238);
+    z-index: -1;
+}
+  
+.hero-details-container::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: rgb(239, 238, 238);
+    z-index: -1;
+}
+
+
+/*Content*/
+.hero-details-content {
+    position: relative;
+    width: 99%;
+    height: 84vh;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(45, 45, 45);
+}
+
+.hero-details-content::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: rgb(45, 45, 45);
+}
+  
+.hero-details-content::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: rgb(45, 45, 45);
+}
+
+.heroes-details-img {
+    position: absolute;
+    top: -10%;
+    width: 512px;
+    z-index: 9999;
+}
+
+
+/*Area que mostra detalhes sobre a classe escolhida*/
+.chosen-class {
+    width: 95%;
+    height: 33vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2%;
+    z-index: 9999;
+}
+
+.hero-class-type-container {
+    position: relative;
+    height: 7vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 10%;
+}
+
+.hero-class-type-container span{
+    position: absolute;
+    top: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-name {
+    position: absolute;
+    bottom: 0%;
+    font-size: 2.1rem;
+    margin-top: 30px;
+    color: rgb(188, 188, 188);
+}
+
+.hero-class-type {
+    font-size: 2rem;
+    color: rgb(229, 229, 229);
+}
+
+.class-stats {
+    width: 100%;
+    height: 18vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stats-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.stats-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stats-content h3 {
+    width: 30%;
+}
+
+.stat {
+    position: relative;
+    width: 40%;
+    height: 2.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: black;
+    transition: 0.2s all;
+    background: linear-gradient(to left, rgb(229, 229, 229)  50%, black 50%);
+}
+
+.life {
+    background: linear-gradient(to left, rgb(229, 229, 229)  10%, black 10%);
+}
+
+.mana {
+    background: linear-gradient(to left, rgb(229, 229, 229)  80%, black 80%);
+}
+
+.att {
+    background: linear-gradient(to left, rgb(229, 229, 229)  60%, black 60%);
+}
+
+.def {
+    background: linear-gradient(to left, rgb(229, 229, 229)  20%, black 20%);
+}
+
+.inteli {
+    background: linear-gradient(to left, rgb(229, 229, 229)  80%, black 80%);
+}
+
+.agility {
+    background: linear-gradient(to left, rgb(229, 229, 229)  50%, black 50%);
+}
+
+
+
+
+
+
+/****Div com o input name*/
+.input-name-div {
+    position: relative;
+    width: 80%;
+    height: 6vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    z-index: 9999;
+}
+
+.input-name-div::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: rgb(229, 229, 229);
+}
+  
+.input-name-div::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: rgb(229, 229, 229);
+}
+
+.name-input {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    border: 0;
+    background-color: transparent;
+    outline-style: none;
+    font-family: "Pixel Title";
+    font-size: 1rem;
+}
+
+
+/*Botão de Start*/
+.start-game {
+    position: relative;
+    width: 25%;
+    height: 6vh;
+    background-color: rgb(229, 229, 229);
+    font-family: "Pixel Title";
+    border: 0;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    z-index: 9999;
+    transition: 0.2s all;
+    cursor: pointer;
+}
+  
+.start-game::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: rgb(229, 229, 229);
+    z-index: -1;
+}
+
+.start-game:hover {
+    transform: scale(1.05);
+}

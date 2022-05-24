@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/createChar.css">
+</head>
+<body>
+    <div class="container">
+       <div class="content">
+            <section class="choose-hero-container">
+               
+                <section class="choose-hero-content">
+                    <h2 class="choose-hero-title">Create Character</h2>
+
+                    <article class="heroes">
+                        <button class="heroes-span-border">
+                            <span onclick="changeImg(0)"><img src="../img/knight-front.png" class="heroes-img"></span>
+                        </button>
+                        <button class="heroes-span-border">
+                            <span onclick="changeImg(1)"><img src="../img/rogue-front.png" class="heroes-img"></span>
+                        </button>
+                        <button class="heroes-span-border">
+                            <span onclick="changeImg(2)"><img src="../img/mage-front.png" class="heroes-img mage-front"></span>
+                        </button>
+                        <button class="heroes-span-border">
+                            <span onclick="changeImg(3)"><img src="../img/necromancer-front.png" class="heroes-img mage-front"></span>
+                        </button>
+                        <button class="heroes-span-border">
+                            <span onclick="changeImg(4)"><img src="../img/demon-front.png" class="heroes-img mage-front"></span>
+                        </button>
+                        <button class="heroes-span-border">
+                            <span onclick="changeImg(5)"><img src="../img/ninja-front.png" class="heroes-img mage-front"></span>
+                        </button>
+                    </article>  
+                    
+                </section>
+
+            </section>
+
+            <section class="hero-details-container">
+                <section class="hero-details-content">
+                    <img src="../img/knight-front.png" class="heroes-details-img">
+                     <article class="chosen-class">
+                            <div class="hero-class-type-container">
+                                <h3 class="hero-name">Knight</h3>
+                                <span>
+                                    <h2 class="hero-class-type">TYPE&nbsp;-&nbsp; </h2>
+                                    <h1 class="hero-class-type hero-class-type-2">Tank</h1>
+                                </span>
+                            </div>
+
+                        <section class="class-stats">
+                            <div class="stats-container">
+                                <span class="life-stats stats-content">
+                                    <!--Quando adicionar um persoagem, deve se adicionar outro numero
+                                        pra cada classe-->
+                                    <h3>Life:</h3> <div class="stat life 0 1 2 3 4 5"></div>
+                                </span>
+                                <span class="mana-stats stats-content">
+                                    <h3>Mana:</h3> <div class="stat mana 0 1 2 3 4 5"></div>
+                                </span>
+                                <span class="attack-status stats-content">
+                                    <h3>Att:</h3> <div class="stat att 0 1 2 3 4 5"></div>
+                                </span>
+                            </div>
+                            <div class="stats-container">
+                                <span class="life-stats stats-content">
+                                    <h3>Defense:</h3> <div class="stat def 0 1 2 3 4 5"></div>
+                                </span>
+                                <span class="mana-stats stats-content">
+                                    <h3>Inteli:</h3> <div class="stat inteli 0 1 2 3 4 5"></div>
+                                </span>
+                                <span class="attack-status stats-content">
+                                    <h3>Agility:</h3> <div class="stat agility 0 1 2 3 4 5"></div>
+                                </span>
+                            </div>
+                        </section>
+                     </article>
+
+                    <div class="input-name-div">
+                        <input type="text" placeholder="Enter your Name" class="name-input">
+                    </div>
+
+                    <button type="submit" class="start-game">
+                        <h3><a href="game.html">Start</a></h3>
+                    </button>
+
+                </section>
+            </section>
+
+       </div>
+   </div>
+   <script src="../js/clickChangeImage.js"></script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+
+
+
+@font-face {
+    font-family: "Pixel Title";
+    src: url('../fonts/upheavtt-webfont.woff2');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: "Pixel Title";
+    overflow-y: hidden;
+}
+
+.container {
+    width: 100%;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.enemy, .character {
+    position: relative;
+    width: 90%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(31, 30, 30);
+}
+
+.pixel-left-arrow {
+    position: absolute;
+    right: 10%;
+    top: 30%;
+    display: none;
+    z-index: 9999;
+    animation: pixelArrow ease-in-out infinite 0.8s;
+}
+
+.pixel-right-arrow {
+    position: absolute;
+    left: 10%;
+    top: 30%;
+    display: none;
+    z-index: 9999;
+    animation: pixelArrow ease-in-out infinite 0.8s;
+}
+
+.char-battle-details-content {
+    position: absolute;
+    top: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 896px;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(216, 215, 215);
+}
+
+.char-battle-details {
+    position: absolute;
+    top: -13%;
+}
+
+.all-infos-content {
+    position: absolute;
+    top: 8%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+    line-height: 0px;
+}
+
+.name-infos {
+    display: flex;
+}
+
+
+.vs-img {
+    position: absolute;
+    top: 50%;
+    left: 50.20%;
+    width: 212px;
+    transform: translate(-50%,-50%);
+    z-index: 9999;
+}
+
+.character {
+    border-right: 2px solid white;
+}
+
+.enemy {
+    border-left: 2px solid white;
+}
+
+.life-mana-container {
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 70px;
+}
+
+.life-mana-content {
+    position: relative;
+    width: 100%;
+    height: 22vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.life-mana-content span {
+    margin-right: 20px;
+    font-size: 2rem;
+    color: rgb(216, 215, 215);
+}
+
+.life-bar-content, .mana-bar-content {
+    position: relative;
+    width: 80%;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-color: aliceblue;
+}
+
+.life-width, .mana-width{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.life-width {
+    background-color: rgb(242, 65, 46);
+    transition: 0.4s all;
+}
+
+.mana-width {
+    background-color: rgb(2, 88, 164);
+    transition: 0.4s all;
+}
+
+.life-bar-content div h4, .mana-bar-content div h4 {
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.class-img-content {
+    position: relative;
+    width: 500px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(50, 50, 50);
+    border-radius: 80%;
+    -webkit-box-shadow: 3px 3px 11px 3px #000000; 
+    box-shadow: 3px 3px 11px 3px #000000;
+    margin-top: 70px;
+}
+
+.character-img {
+    position: absolute;
+    top: -120%;
+    width: 384px;
+    z-index: 6;
+}
+
+.enemy-damage {
+    position: absolute;
+    left: 30%;
+    bottom: 50%;
+    color: #b8b8b8;
+    font-size: 3.3rem;
+}
+
+
+/*Atributos do personagem*/
+.character-attributes {
+    position: absolute;
+    top: 30%;
+    left: 5%;
+    width: 5px;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(239, 238, 238);
+}
+
+.enemy-attributes {
+    position: absolute;
+    top: 30%;
+    right: 5%;
+    width: 5px;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(239, 238, 238);
+}
+
+.character-attributes-content {
+    width: 90%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.character-attributes-content div {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    background-color: rgb(239, 238, 238);
+    border-radius: 50%;
+    font-size: 0.8rem;
+}
+
+
+/*Interface de attacks*/
+.skills-container{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 2%;
+    width: 100%;
+    height: 27vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(239, 238, 238);
+}
+
+.skills-content {
+    width: 290px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.skill {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    margin-top: 10px;
+    background-color: rgb(45, 45, 45);
+    border: 2px solid rgb(239, 238, 238);
+    
+    cursor: pointer;
+}
+
+/*.skill:hover {
+    filter: brightness(71%);
+}*/
+
+.atks-img {
+    width: 80px;
+}
+
+.skill-description {
+    position: absolute;
+    left: 70%;
+    bottom: 70%;
+    width: 250px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(37, 37, 37);
+    color: rgb(239, 238, 238);
+    font-size: 0.9rem;
+    z-index: 9999;
+    display: none;
+}
+
+.skill-description-content {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+}
+
+.skill-description::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: rgb(37, 37, 37);
+    z-index: -1;
+}
+  
+.skill-description::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: rgb(37, 37, 37);
+    z-index: -1;
+}
+
+.skill-description-content div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.skill-description-content div span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.skill-description-content div span:nth-child(1){
+    color: red;
+}
+
+.skill-description-content div span:nth-child(2){
+    color: rgb(2, 88, 164);
+}
+
+.out-of-mana-container {
+    position: absolute;
+    bottom: 10%;
+    right: 7%;
+    width: 200px;
+    height: 100px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s all;
+    z-index: 2;
+}
+
+.out-of-mana-container::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: #b8b8b8;
+    z-index: -1;
+}
+  
+.out-of-mana-container::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: #b8b8b8;
+    z-index: -1;
+}
+
+.out-of-mana {
+    position: relative;
+    width: 190px;
+    height: 83px;
+    background-color: rgb(37, 37, 37);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    margin: 0 auto;
+    color: #b8b8b8;
+}
+
+.out-of-mana::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: rgb(37, 37, 37);
+    z-index: -1;
+}
+  
+.out-of-mana::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: rgb(37, 37, 37);
+    z-index: -1;
+}
+
+.out-of-mana span {
+    position: absolute;
+    top: -40%;
+    left: -7%;
+    font-size: 5.5rem;
+    color: rgb(2, 88, 164);
+    transform: rotate(-10deg);
+}
+
+@keyframes outOfMana {
+    25% { transform: translate(20px); }
+    50% { transform: translate(-20px); }
+    75% { transform: translate(20px); }
+}
+
+@keyframes pixelArrow {
+    0% { transform: translateX(0px); }
+    50% { transform: translateX(-8px); }
+    100% { transform: translateX(0px); }
+}
+
