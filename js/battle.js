@@ -32,7 +32,7 @@ let bottomPosition = 50;
 //Status do inimigo
 
 //Mana do Inimigo
-let enemyMana = 150;
+let enemyMana = 100;
 
 //Defesa do Inimigo
 let enemyDef = 15;
@@ -43,28 +43,35 @@ let enemyLife = 75;
 let enemySkills = 
     [                  
         //Mana  Dano   Ex.Dam   Def   Cura
-        [ 15,     15,    1,      0,    0   ], //Skill 1
-        [ 50,     0,     1,      50,   0   ], //Skill 2
-        [ 20,     0,     0,      0,    30   ],  //Skill 3
-        [ 0,      0,     1,      0,    0   ], //Skill 4
-        [ 0,      0,     15,     0,    0   ], //Skill 5
-        [ 0,      0,     15,     0,    0   ]  //Skill 6
+        [ 10,     10,    1,      1,    1   ], //Skill 1
+        [ 20,     20,    1,      1,    1   ], //Skill 2
+        [ 40,     1,     1,      30,   30  ], //Skill 3
+        [ 50,     50,    1,      1,    1   ], //Skill 4
+        [ 50,     1,     1,      1,    30  ], //Skill 5
+        [ 90,     5,     1,      1,    1   ],  //Skill 6
+        [ 0,      0,     0,      0,    0   ]  //Caso a mana não seja suficiente
     ];
+
+//Numero que vai decidir os ataques do inimigo
+let enemySkillNumber = 0;
 
 
 function useAttack( skillNumber ) {
     
     if(charTurn) { //Caso seja vez do jogador jogar
    
-    //Ver se a mana que a skill usa é maior que a mana do char
-    if(skills[skillNumber][0] <= charMana) {
+        //Ver se a mana que a skill usa é maior que a mana do char
+        if(skills[skillNumber][0] <= charMana) {
 
         //Passar o turno pro inimigo
         charTurn = false; 
+
+        //Desabilitar botões
         
         //Tirar mana do personagem 
         charMana = charMana - skills[skillNumber][0];
         document.getElementsByClassName("mana-width")[0].style.width = charMana+"%";
+        document.getElementsByClassName("mana-number")[0].innerHTML = charMana;
 
 
         //Adicionar Extra Damage, se a skill não for de extra damage, não vai adicionar nada (valor 1)
@@ -86,6 +93,7 @@ function useAttack( skillNumber ) {
             //Porcentagem da vida do inimigo
             enemyLifePercent = 100 - (damage / (75 / 100));
             document.getElementsByClassName("life-width")[1].style.width = enemyLifePercent+"%";
+            document.getElementsByClassName("life-number")[1].innerHTML = enemyLifePercent;
 
             //Aparecer dano no inimigo
             document.getElementsByClassName("enemy-damage")[0].innerHTML = "-" + skills[skillNumber][1];
@@ -125,22 +133,50 @@ function useAttack( skillNumber ) {
         document.getElementsByClassName("pixel-right-arrow")[0].style.display = "block";
         document.getElementsByClassName("pixel-left-arrow")[0].style.display = "none";
 
+         //Adicionar 10 de mana
+         enemyMana+= 10;
+         if(enemyMana > 100){
+             enemyMana = 100;
+         }
+         document.getElementsByClassName("mana-width")[1].style.width = enemyMana+"%";
+         document.getElementsByClassName("mana-number")[1].innerHTML = enemyMana;
+        
+
         function enemyAttacks() {
-            if(charLife === 100) {
-                alert("atk 1");
+
+            //Faz um calculo com a mana pra sortear uma skill que esteja dentro do limite da mana
+            enemySkillNumber = (enemyMana / 10) / 2;
+                
+            if(enemySkills[Math.ceil(enemySkillNumber)][0] > enemyMana) {
+                //Conta vai dar 6, que é a skill referente a mana zerada
+                enemySkillNumber = 120;
+            }else {
+                //Tirar mana
+                enemyMana = enemyMana - enemySkills[Math.ceil(enemySkillNumber)][0];
+
+                //Dar dano
+                enemySkills[Math.ceil(enemySkillNumber)][1];
+
+                //Ex. Damage
+                enemySkills[Math.ceil(enemySkillNumber)][2];
+
+                //Def Extra
+                enemySkills[Math.ceil(enemySkillNumber)][3];
+
+                //Cura
+                enemySkills[Math.ceil(enemySkillNumber)][4];
             }
-    
-            if(enemyLife < 50) {
-                alert("atk 2");
-            }
-            
-            charTurn = true;
+
 
             //Mostrar Seta do personagem
             document.getElementsByClassName("pixel-left-arrow")[0].style.display = "block"; 
             //Tirar seta do inimigo
             document.getElementsByClassName("pixel-right-arrow")[0].style.display = "none";
+
+            document.getElementsByClassName("mana-number")[1].innerHTML = enemyMana;
+            document.getElementsByClassName("mana-width")[1].style.width = enemyMana+"%";
             
+            charTurn = true;
         }
 
         setTimeout(enemyAttacks, 2000);
