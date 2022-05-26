@@ -30,6 +30,9 @@
                         <img src="../img/knight-front.png" class="character-img">
                     </div>
 
+                    <!--Dano que vai aparecer e sumir depois de um tempo-->
+                    <span class="char-damage">10</span>
+
                     <!--Div para mostrar os atributos do personagem-->
                     <section class="character-attributes">
                         <div class="character-attributes-content">
@@ -60,11 +63,10 @@
 
                     <section class="skills-container">
                         <div class="skills-content">
-                            <button class="skill">
+                            <button class="skill" type="button" onclick="useAttack(0)">
                                 <img src="../img/knight-attack-1.png" class="atks-img" 
                                 onmouseover="showSkillDescription(0)"
-                                onmouseout="displayNoneSkillDescription(0)"
-                                onclick="useAttack(0)">
+                                onmouseout="displayNoneSkillDescription(0)">
                                 <div class="skill-description">
                                     <div class="skill-description-content">
                                         Ataque básico. O Cavaleiro ataca o inimigo utilizando
@@ -76,11 +78,10 @@
                                     </div>
                                 </div>
                             </button>
-                            <button class="skill">
+                            <button class="skill" onclick="useAttack(1)">
                                 <img src="../img/knight-attack-2.png" class="atks-img" 
                                 onmouseover="showSkillDescription(1)"
-                                onmouseout="displayNoneSkillDescription(1)"
-                                onclick="useAttack(1)">
+                                onmouseout="displayNoneSkillDescription(1)">
                                 <div class="skill-description">
                                     <div class="skill-description-content">
                                         O cavaleiro usa seu escudo para aumentar sua 
@@ -92,11 +93,10 @@
                                     </div>
                                 </div>
                             </button>
-                            <button class="skill">
+                            <button class="skill" onclick="useAttack(2)">
                                 <img src="../img/knight-attack-3.png" class="atks-img" 
                                 onmouseover="showSkillDescription(2)"
-                                onmouseout="displayNoneSkillDescription(2)"
-                                onclick="useAttack(2)">
+                                onmouseout="displayNoneSkillDescription(2)">
                                 <div class="skill-description">
                                     <div class="skill-description-content">
                                         O cavaleiro usa uma das poções de vidas
@@ -109,7 +109,7 @@
                                     </div>
                                 </div>
                             </button>
-                            <button class="skill">
+                            <button class="skill" onclick="useAttack(3)">
                                 <img src="../img/knight-attack-4.png" class="atks-img"
                                 onmouseover="showSkillDescription(3)"
                                 onmouseout="displayNoneSkillDescription(3)">
@@ -124,7 +124,7 @@
                                     </div>
                                 </div>
                             </button>
-                            <button class="skill">
+                            <button class="skill" onclick="useAttack(4)">
                                 <img src="../img/knight-attack-5.png" class="atks-img"
                                 onmouseover="showSkillDescription(4)"
                                 onmouseout="displayNoneSkillDescription(4)">
@@ -139,7 +139,7 @@
                                     </div>
                                 </div>
                             </button>
-                            <button class="skill">
+                            <button class="skill" onclick="useAttack(5)">
                                 <img src="../img/knight-attack-6.png" class="atks-img"
                                 onmouseover="showSkillDescription(5)"
                                 onmouseout="displayNoneSkillDescription(5)">

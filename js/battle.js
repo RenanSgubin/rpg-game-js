@@ -18,18 +18,21 @@ let charTurn = true;
 let skills = 
     [                  
         //Mana  Dano   Ex.Dam   Def   Cura
-        [ 15,     15,    1,      0,    0   ], //Skill 1
+        [ 15,     10,    1,      0,    0   ], //Skill 1
         [ 50,     0,     1,      50,   0   ], //Skill 2
         [ 20,     0,     0,      0,    30   ],  //Skill 3
         [ 0,      0,     1,      0,    0   ], //Skill 4
-        [ 0,      0,     15,     0,    0   ], //Skill 5
-        [ 0,      0,     15,     0,    0   ]  //Skill 6
+        [ 30,      0,     15,     0,    0   ], //Skill 5
+        [ 40,      0,     20,     0,    0   ]  //Skill 6
     ];
 
 //Posição do dano que o char da no inimigo
 let bottomPosition = 50;
 
 //Status do inimigo
+
+let charLifePercent = 0;
+let enemyDamage = 0;
 
 //Mana do Inimigo
 let enemyMana = 100;
@@ -38,7 +41,7 @@ let enemyMana = 100;
 let enemyDef = 15;
 
 //Vida do personagem
-let enemyLife = 75;
+let enemyLife = 100;
 
 let enemySkills = 
     [                  
@@ -48,7 +51,7 @@ let enemySkills =
         [ 40,     1,     1,      30,   30  ], //Skill 3
         [ 50,     50,    1,      1,    1   ], //Skill 4
         [ 50,     1,     1,      1,    30  ], //Skill 5
-        [ 90,     5,     1,      1,    1   ],  //Skill 6
+        [ 90,     40,     1,      1,    1   ],  //Skill 6
         [ 0,      0,     0,      0,    0   ]  //Caso a mana não seja suficiente
     ];
 
@@ -67,6 +70,9 @@ function useAttack( skillNumber ) {
         charTurn = false; 
 
         //Desabilitar botões
+        for(let i = 0; i < 6; i++) {
+            document.getElementsByClassName("skill")[i].disabled = true;
+        }
         
         //Tirar mana do personagem 
         charMana = charMana - skills[skillNumber][0];
@@ -81,9 +87,9 @@ function useAttack( skillNumber ) {
         charDef = charDef + ((charDef / 100) * skills[skillNumber][3]);
 
         //Curar
-        document.getElementsByClassName("life-width")[0].style.width = charLife+"%";
         charLife = charLife + skills[skillNumber][4];
         document.getElementsByClassName("life-width")[0].style.width = charLife+"%";
+        document.getElementsByClassName("life-number")[0].innerHTML = charLife;
         
 
         //Ataque
@@ -91,7 +97,7 @@ function useAttack( skillNumber ) {
             //Tirar vida do inimigo
             damage = damage + skills[skillNumber][1];
             //Porcentagem da vida do inimigo
-            enemyLifePercent = 100 - (damage / (75 / 100));
+            enemyLifePercent = 100 - damage;
             document.getElementsByClassName("life-width")[1].style.width = enemyLifePercent+"%";
             document.getElementsByClassName("life-number")[1].innerHTML = enemyLifePercent;
 
@@ -154,8 +160,33 @@ function useAttack( skillNumber ) {
                 //Tirar mana
                 enemyMana = enemyMana - enemySkills[Math.ceil(enemySkillNumber)][0];
 
-                //Dar dano
+                //Tirar vida do Char
+                enemyDamage = enemyDamage + enemySkills[Math.ceil(enemySkillNumber)][1];
+                //Porcentagem da vida do Char
+                charLifePercent = 100 - enemyDamage;
+                charLife = charLifePercent;
+                console.log(charLife);
+                document.getElementsByClassName("life-width")[0].style.width = charLife+"%";
+                document.getElementsByClassName("life-number")[0].innerHTML = charLife;
+
+                //Aparecer dano no inimigo
+                document.getElementsByClassName("char-damage")[0].innerHTML = "-" + 
                 enemySkills[Math.ceil(enemySkillNumber)][1];
+
+                //Mover ele até sumir
+                function showEnemyDamage(){
+                    bottomPosition = bottomPosition + 0.1;
+                    document.getElementsByClassName("char-damage")[0].style.bottom = bottomPosition + "%";
+
+                    if(Math.round(bottomPosition) === 68) {
+                        document.getElementsByClassName("char-damage")[0].style.display = "none";
+                    }
+                }
+                //Zerar tudo
+                bottomPosition = 50; 
+                document.getElementsByClassName("char-damage")[0].style.display = "flex";
+                
+                setInterval(showEnemyDamage, 1); 
 
                 //Ex. Damage
                 enemySkills[Math.ceil(enemySkillNumber)][2];
@@ -177,6 +208,11 @@ function useAttack( skillNumber ) {
             document.getElementsByClassName("mana-width")[1].style.width = enemyMana+"%";
             
             charTurn = true;
+
+            //Habilitar botões
+            for(let i = 0; i < 6; i++) {
+                document.getElementsByClassName("skill")[i].disabled = false;
+            }
         }
 
         setTimeout(enemyAttacks, 2000);
