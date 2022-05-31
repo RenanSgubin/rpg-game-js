@@ -75,7 +75,7 @@ body {
     height: 700px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     color: rgb(216, 215, 215);
     z-index: 9999;
 }
@@ -83,6 +83,21 @@ body {
 .char-battle-details {
     position: absolute;
     top: -13%;
+}
+
+.back-to-createchar {
+    position: absolute;
+    left: 1%;
+    top: 1%;
+    background-color: rgb(73, 73, 73);
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow-back:hover {
+    filter: brightness(190%);
 }
 
 .all-infos-content {

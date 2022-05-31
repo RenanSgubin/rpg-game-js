@@ -25,12 +25,12 @@ let charHeal = 0;
 let skills = 
     [                  
         //Mana  Dano   Ex.Dam   Def   Cura
-        [ 15,     10,    1,      0,    0   ], //Skill 1
+        [ 15,     23,    1,      0,    0   ], //Skill 1
         [ 50,     0,     1,      50,   0   ], //Skill 2
-        [ 20,     0,     0,      0,    30   ],  //Skill 3
+        [ 30,     0,     0,      0,    30   ],  //Skill 3
         [ 0,      0,     1,      0,    0   ], //Skill 4
-        [ 30,      0,     15,     0,    0   ], //Skill 5
-        [ 40,      0,     20,     0,    0   ]  //Skill 6
+        [ 30,     0,     15,     0,    0   ], //Skill 5
+        [ 40,     0,     20,     0,    0   ]  //Skill 6
     ];
 
 //Posição do dano que o char da no inimigo
@@ -45,18 +45,24 @@ let enemyMana = 100;
 //Defesa do Inimigo
 let enemyDef = 15;
 
-//Vida do personagem
-let enemyLife = 100;
+//Auxiliadora heal
+let enemyLifeHealAux = 0;
+let enemyLifeHealAuxTotal = 100;
+
+//Cura do inimigo
+let enemyHeal = 0;
+
+let teste = 0;
 
 let enemySkills = 
     [                  
         //Mana  Dano   Ex.Dam   Def   Cura
-        [ 5,      5,     1,      1,     1   ], //Skill 1
-        [ 10,     10,    1,      1,     1   ], //Skill 2
-        [ 30,     0,     1,      30,    0   ], //Skill 3
-        [ 50,     40,    1,      1,     1   ], //Skill 4
-        [ 70,     1,     1,      1,     40  ], //Skill 5
-        [ 90,     80,    1,      1,     1   ],  //Skill 6
+        [ 5,      5,     0,      0,     0   ], //Skill 1
+        [ 10,     10,    0,      0,     0   ], //Skill 2
+        [ 30,     0,     0,      30,    0   ], //Skill 3
+        [ 50,     40,    0,      0,     0   ], //Skill 4
+        [ 40,     0,     0,      0,     20  ], //Skill 5
+        [ 90,     80,    0,      0,     0   ],  //Skill 6
         [ 0,      0,     0,      0,     0   ]  //Caso a mana não seja suficiente
     ];
 
@@ -83,7 +89,6 @@ function useAttack( skillNumber ) {
         document.getElementsByClassName("mana-width")[0].style.width = charMana+"%";
         document.getElementsByClassName("mana-number")[0].innerHTML = charMana;
 
-
         //Adicionar Extra Damage, se a skill não for de extra damage, não vai adicionar nada (valor 1)
         skills[skillNumber][1] / 100 * skills[skillNumber][2];
 
@@ -97,17 +102,19 @@ function useAttack( skillNumber ) {
             document.getElementsByClassName("life-number")[0].innerHTML = charLifeHealAuxTotal+30;
         }
         
-        
-
         //Ataque
         if(skillNumber === 0) {
-            //Tirar vida do inimigo
-            damage = damage + skills[skillNumber][1];
-            //Porcentagem da vida do inimigo
-            enemyLifePercent = 100 - (damage - (damage / 100 * enemyDef));
+            //Heal do inimigo
+            enemyHeal = enemySkills[Math.ceil(enemySkillNumber)][4];
+            //Dano ao inimigo
+            damage = skills[skillNumber][1];
 
-            document.getElementsByClassName("life-width")[1].style.width = enemyLifePercent+"%";
-            document.getElementsByClassName("life-number")[1].innerHTML = enemyLifePercent;
+            let enemyLife = (damage - (damage / 100 * enemyDef)) - enemyHeal;
+            enemyLifeHealAux = enemyLifeHealAux + enemyLife;
+            enemyLifeHealAuxTotal = 100 - enemyLifeHealAux;
+
+            document.getElementsByClassName("life-width")[1].style.width = enemyLifeHealAuxTotal+"%";
+            document.getElementsByClassName("life-number")[1].innerHTML = enemyLifeHealAuxTotal;
 
             //Aparecer dano no inimigo
             document.getElementsByClassName("enemy-damage")[0].style.display = "flex"; 
@@ -115,11 +122,10 @@ function useAttack( skillNumber ) {
 
             document.getElementsByClassName("enemy-damage")[0].style.animation = "damageShake linear 300ms";
 
-                let showDamage = setTimeout(function() {
-                    document.getElementsByClassName("enemy-damage")[0].style.display = "none";
-                }, 1500);
-             }
-    
+            let showDamage = setTimeout(function() {
+                document.getElementsByClassName("enemy-damage")[0].style.display = "none";
+            }, 1500);
+        }
         }else {
             //Sem mana
             document.getElementsByClassName("out-of-mana-container")[0].style.display= "flex";
@@ -145,65 +151,61 @@ function enemyTurn() {
     document.getElementsByClassName("pixel-right-arrow")[0].style.display = "block";
     document.getElementsByClassName("pixel-left-arrow")[0].style.display = "none";
 
-     //Adicionar 10 de mana
-     enemyMana+= 10;
-     if(enemyMana > 100){
-         enemyMana = 100;
-     }
-     document.getElementsByClassName("mana-width")[1].style.width = enemyMana+"%";
-     document.getElementsByClassName("mana-number")[1].innerHTML = enemyMana;
+    //Adicionar 10 de mana
+    enemyMana+= 10;
+    if(enemyMana > 100){
+        enemyMana = 100;
+    }
+    document.getElementsByClassName("mana-width")[1].style.width = enemyMana+"%";
+    document.getElementsByClassName("mana-number")[1].innerHTML = enemyMana;
     
+     function enemyAttacks() {
 
-    function enemyAttacks() {
+        //Faz um calculo com a mana pra sortear uma skill que esteja dentro do limite da mana
+        enemySkillNumber = (enemyMana / 10) / 2;
 
-            //Faz um calculo com a mana pra sortear uma skill que esteja dentro do limite da mana
-            enemySkillNumber = (enemyMana / 10) / 2;
+        if(enemyLifeHealAuxTotal<= 40) {
+            enemySkillNumber = 4;
 
-            if(enemyLife <= 40) {
-                enemySkillNumber = 4;
-
-                if(enemyMana <= enemySkills[enemySkillNumber][0]) {
-                    charTurn = true;
-                }
+            if(enemyMana < enemySkills[Math.ceil(enemySkillNumber)][0]){
+                charTurn = true;
+                enemySkillNumber = 6;
             }
+        }
      
-            //Porcentagem da vida do Char
-            let enemyDamage = enemySkills[Math.ceil(enemySkillNumber)][1] - 
-            (enemySkills[Math.ceil(enemySkillNumber)][1] / 100 * 25);
+        //Porcentagem da vida do Char
+        let enemyDamage = enemySkills[Math.ceil(enemySkillNumber)][1] - 
+        (enemySkills[Math.ceil(enemySkillNumber)][1] / 100 * 25);
 
-            charLife = enemyDamage - charHeal; //Vida do Jogador;
-            charLifeHealAux = charLifeHealAux + charLife;
-            charLifeHealAuxTotal = 100 - charLifeHealAux;
-            charHeal = 0;
+        charLife = enemyDamage - charHeal; //Vida do Jogador;
+        charLifeHealAux = charLifeHealAux + charLife;
+        charLifeHealAuxTotal = 100 - charLifeHealAux;
+        charHeal = 0;
+        document.getElementsByClassName("life-width")[0].style.width = charLifeHealAuxTotal+"%";
+        document.getElementsByClassName("life-number")[0].innerHTML = charLifeHealAuxTotal;         
 
-            document.getElementsByClassName("life-width")[0].style.width = charLifeHealAuxTotal+"%";
-            document.getElementsByClassName("life-number")[0].innerHTML = charLifeHealAuxTotal;
-                       
+        //Tirar mana
+        enemyMana = enemyMana - enemySkills[Math.ceil(enemySkillNumber)][0];
 
-            //Tirar mana
-            enemyMana = enemyMana - enemySkills[Math.ceil(enemySkillNumber)][0];
+        //Aparecer dano no jogador
+        document.getElementsByClassName("char-damage")[0].innerHTML = "-" + enemyDamage;
+        document.getElementsByClassName("char-damage")[0].style.display= "flex";
+        document.getElementsByClassName("char-damage")[0].style.animation = "damageShake linear 300ms";
+        let showDamage = setTimeout(function() {
+            document.getElementsByClassName("char-damage")[0].style.display = "none";
+        }, 1500);
 
-            //Aparecer dano no jogador
-            document.getElementsByClassName("char-damage")[0].innerHTML = "-" + enemyDamage;
+        //Ex. Damage
+        enemySkills[Math.ceil(enemySkillNumber)][2];
 
-            document.getElementsByClassName("char-damage")[0].style.display= "flex";
-            document.getElementsByClassName("char-damage")[0].style.animation = "damageShake linear 300ms";
+        //Def Extra
+        enemySkills[Math.ceil(enemySkillNumber)][3];
 
-                let showDamage = setTimeout(function() {
-                    document.getElementsByClassName("char-damage")[0].style.display = "none";
-                }, 1500);
-
-            //Ex. Damage
-            enemySkills[Math.ceil(enemySkillNumber)][2];
-
-            //Def Extra
-            enemySkills[Math.ceil(enemySkillNumber)][3];
-
-            //Cura
-            enemySkills[Math.ceil(enemySkillNumber)][4];
-        
-
-
+        //Cura
+        document.getElementsByClassName("life-width")[1].style.width = enemyLifeHealAuxTotal+enemySkills[Math.ceil(enemySkillNumber)][4]+"%";
+        document.getElementsByClassName("life-number")[1].innerHTML = enemyLifeHealAuxTotal+enemySkills[Math.ceil(enemySkillNumber)][4];
+        enemyLifeHealAuxTotal = enemyLifeHealAuxTotal + enemySkills[Math.ceil(enemySkillNumber)][4];
+    
         //Mostrar Seta do personagem
         document.getElementsByClassName("pixel-left-arrow")[0].style.display = "block"; 
         //Tirar seta do inimigo
