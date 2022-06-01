@@ -22,15 +22,21 @@ let charTurn = true;
 //Controlar cura
 let charHeal = 0;
 
+//Controlar rounds do Char
+let roundsChar = 0;
+
+//Controlar as skills que funcionam por round
+let skillsRounds = [];
+
 let skills = 
     [                  
-        //Mana  Dano   Ex.Dam   Def   Cura
-        [ 15,     23,    1,      0,    0   ], //Skill 1
-        [ 50,     0,     1,      50,   0   ], //Skill 2
-        [ 30,     0,     0,      0,    30   ],  //Skill 3
-        [ 0,      0,     1,      0,    0   ], //Skill 4
-        [ 30,     0,     15,     0,    0   ], //Skill 5
-        [ 40,     0,     20,     0,    0   ]  //Skill 6
+        //Mana  Dano   Ex.Dam   Def   Cura  Rounds dura
+        [ 15,     10,    1,      0,    0,       0 ], //Skill 1
+        [ 50,     0,     1,      50,   0,       3 ], //Skill 2
+        [ 30,     0,     0,      0,    30,      0 ],  //Skill 3
+        [ 0,      0,     1,      0,    0,       3 ], //Skill 4
+        [ 30,     0,     15,     0,    0,       2 ], //Skill 5
+        [ 40,     0,     20,     0,    0,       2 ]  //Skill 6
     ];
 
 //Posição do dano que o char da no inimigo
@@ -52,8 +58,6 @@ let enemyLifeHealAuxTotal = 100;
 //Cura do inimigo
 let enemyHeal = 0;
 
-let teste = 0;
-
 let enemySkills = 
     [                  
         //Mana  Dano   Ex.Dam   Def   Cura
@@ -72,7 +76,7 @@ let enemySkillNumber = 0;
 function useAttack( skillNumber ) {
     
     if(charTurn) { //Caso seja vez do jogador jogar
-   
+ 
         //Ver se a mana que a skill usa é maior que a mana do char
         if(skills[skillNumber][0] <= charMana) {
 
@@ -83,14 +87,26 @@ function useAttack( skillNumber ) {
         for(let i = 0; i < 7; i++) {
             document.getElementsByTagName("button")[i].disabled = true;
         }
+
+        //Caso use uma skill de rounds e já esteja outra em ação
+        if(skills[skillNumber][5] > 0 && roundsChar > 0) {
+            console.log("Ja tem skill");
+        }
+
+        //Incrementar round
+        if(skills[skillNumber][5] > 0) {
+            //let charRoundSkill = skills[skillNumber][2];
+            //console.log(charRoundSkill);
+            //roundsChar++;
+        
+            skillsRounds = [1,3,4,5];
+
+        }
         
         //Tirar mana do personagem 
         charMana = charMana - skills[skillNumber][0];
         document.getElementsByClassName("mana-width")[0].style.width = charMana+"%";
         document.getElementsByClassName("mana-number")[0].innerHTML = charMana;
-
-        //Adicionar Extra Damage, se a skill não for de extra damage, não vai adicionar nada (valor 1)
-        skills[skillNumber][1] / 100 * skills[skillNumber][2];
 
         //Aumentar defesa
         charDef = charDef + ((charDef / 100) * skills[skillNumber][3]);
@@ -107,7 +123,9 @@ function useAttack( skillNumber ) {
             //Heal do inimigo
             enemyHeal = enemySkills[Math.ceil(enemySkillNumber)][4];
             //Dano ao inimigo
-            damage = skills[skillNumber][1];
+            if(roundsChar <= 3) {
+                damage = skills[skillNumber][1] + (skills[skillNumber][1] / 100 * skills[skillNumber][2]);
+            }
 
             let enemyLife = (damage - (damage / 100 * enemyDef)) - enemyHeal;
             enemyLifeHealAux = enemyLifeHealAux + enemyLife;
@@ -225,9 +243,9 @@ function enemyTurn() {
         document.getElementsByClassName("mana-number")[0].innerHTML = charMana;
 
         //Habilitar botões
-        for(let i = 0; i < 7; i++) {
-            document.getElementsByTagName("button")[i].disabled = false;
-        }
+        //for(let i = 0; i < 7; i++) {
+            //document.getElementsByTagName("button")[i].disabled = false;
+        //}
     }
 
     setTimeout(enemyAttacks, 2000);
@@ -252,4 +270,25 @@ function passTurn() {
     document.getElementsByClassName("pixel-left-arrow")[0].style.display = "none"; 
     //Tirar seta do inimigo
     document.getElementsByClassName("pixel-right-arrow")[0].style.display = "block";
+}
+
+window.onload = () => {
+    
+}
+
+function skillsTurnsControlFunction() {
+    for(let i = 0; i < skillsRounds.length; i++) {
+        document.getElementsByClassName("skill")[skillsRounds[i]].disabled = true; 
+    }
+    document.getElementsByClassName("atks-img")[3].style.filter = "brightness(190%)";
+    console.log(skillsRounds);
+
+    if(skillsRounds.length > 0) {
+        document.getElementsByClassName("skill")[0].disabled = false; 
+        document.getElementsByClassName("skill")[2].disabled = false; 
+    }
+}
+
+window.onload = () => {
+    let skillsTurnsControl = setInterval(skillsTurnsControlFunction, 200);
 }
