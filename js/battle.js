@@ -33,17 +33,20 @@ let skillsRounds = [];
 
 let skills = 
     [                  
-        //Mana  Dano   Ex.Dam   Def   Cura  Rounds dura
-        [ 15,     10,    1,      0,    0,       0 ], //Skill 1
-        [ 20,     0,     1,      50,   0,       3 ], //Skill 2
-        [ 30,     0,     0,      0,    20,      0 ],  //Skill 3
-        [ 0,      0,     1,      0,    0,       3 ], //Skill 4
-        [ 30,     0,     50,     0,    0,       4 ], //Skill 5
-        [ 40,     0,     70,     0,    0,       4 ]  //Skill 6
+        //Mana  Dano   Ex.Dam   Def   Cura  Rounds dura   Cor dano
+        [ 10,     10,    1,      0,    0,       0,        "#b8b8b8"  ], //Skill 1
+        [ 20,     0,     1,      50,   0,       3,        "#b8b8b8"  ], //Skill 2
+        [ 30,     0,     0,      0,    20,      0,        "#b8b8b8"  ], //Skill 3
+        [ 40,     0,     80,     0,    0,       3,        "#9f1010"  ], //Skill 4
+        [ 50,     0,     100,    0,    0,       3,        "#09102b"  ],  //Skill 5
+        [ 70,     0,     70,     30,   0,       3,        "rgb(123, 59, 2)"  ] //Skill 6
     ];
 
 //Posição do dano que o char da no inimigo
 let y = 50;
+
+//Variavel que controla o intervalo das skills de rounds
+let skillsTurnsControl = 0;
 
 //Status do inimigo
 let charLifePercent = 0;
@@ -63,14 +66,14 @@ let enemyHeal = 0;
 
 let enemySkills = 
     [                  
-        //Mana  Dano   Ex.Dam   Def   Cura
-        [ 5,      5,     0,      0,     0   ], //Skill 1
-        [ 10,     10,    0,      0,     0   ], //Skill 2
-        [ 30,     0,     0,      30,    0   ], //Skill 3
-        [ 50,     40,    0,      0,     0   ], //Skill 4
-        [ 40,     0,     0,      0,     20  ], //Skill 5
-        [ 90,     80,    0,      0,     0   ],  //Skill 6
-        [ 0,      0,     0,      0,     0   ]  //Caso a mana não seja suficiente
+        //Mana  Dano   Ex.Dam   Def   Cura 
+        [ 5,      5,     0,      0,     0  ], //Skill 1
+        [ 10,     10,    0,      0,     0  ], //Skill 2
+        [ 30,     0,     0,      30,    0  ], //Skill 3
+        [ 50,     40,    0,      0,     0  ], //Skill 4
+        [ 40,     0,     0,      0,     20 ], //Skill 5
+        [ 90,     80,    0,      0,     0  ], //Skill 6
+        [ 0,      0,     0,      0,     0  ]  //Caso a mana não seja suficiente
     ];
 
 //Numero que vai decidir os ataques do inimigo
@@ -81,6 +84,8 @@ function useAttack( skillNumber ) {
     if(charTurn) { //Caso seja vez do jogador jogar
 
         roundsChar++;
+
+        skillsTurnsControl = setInterval(skillsTurnsControlFunction, 200);
  
         //Ver se a mana que a skill usa é maior que a mana do char
         if(skills[skillNumber][0] <= charMana) {
@@ -88,25 +93,20 @@ function useAttack( skillNumber ) {
         //Passar o turno pro inimigo
         charTurn = false; 
 
-        //Desabilitar botões
-        //for(let i = 0; i < 7; i++) {
-            //document.getElementsByTagName("button")[i].disabled = true;
-        //}
-
         //Verificar se a skill é baseada em rounds
         if(skills[skillNumber][5] > 0) {
             //Pegar o numero da skill de rounds
             roundsCharSkill = skillNumber;
             skillsRounds = [1,3,4,5];
             roundsChar = 0;
+
+            //Colocar cor no dano
+            document.getElementsByClassName("enemy-damage")[0].style.color = skills[skillNumber][6];
         }
 
-        //Verificar se a skill já bateu o número de rounds dela
-        if(roundsChar ===  skills[roundsCharSkill][5]) {
-            roundsChar = 0;
-            skillsRounds = [];
-            roundsCharSkill = 0;
-            charDef = 33;
+        //Voltar a cor do texto padrão
+        if(roundsChar > skills[roundsCharSkill][5]) {
+            document.getElementsByClassName("enemy-damage")[0].style.color = "#b8b8b8";
         }
 
         //Tirar mana do personagem 
@@ -122,7 +122,7 @@ function useAttack( skillNumber ) {
         charHeal = skills[skillNumber][4];
         if(skillNumber === 2) {
             document.getElementsByClassName("life-width")[0].style.width = charLifeHealAuxTotal+skills[2][4]+"%";
-            document.getElementsByClassName("life-number")[0].innerHTML = charLifeHealAuxTotal+skills[2][4];
+            document.getElementsByClassName("life-number")[0].innerHTML = parseFloat(charLifeHealAuxTotal+skills[2][4].toFixed(2));
         }
         
         //Dano ao inimigo
@@ -174,6 +174,23 @@ function useAttack( skillNumber ) {
 function enemyTurn() {
     document.getElementsByClassName("pixel-right-arrow")[0].style.display = "block";
     document.getElementsByClassName("pixel-left-arrow")[0].style.display = "none";
+
+    //Verificar se a skill já bateu o número de rounds dela
+    if(roundsChar ===  skills[roundsCharSkill][5]) {
+        roundsChar = 0;
+        skillsRounds = [];
+        roundsCharSkill = 0;
+        charDef = 33;
+        document.getElementsByClassName("char-defense-number")[0].innerHTML = charDef;
+    }
+
+    //Desabilitar botões
+    for(let i = 0; i < 7; i++) {
+        document.getElementsByTagName("button")[i].disabled = true;
+    }
+
+    //Limpar intervalo
+    clearInterval(skillsTurnsControl);
 
     //Adicionar 10 de mana
     enemyMana+= 10;
@@ -248,9 +265,9 @@ function enemyTurn() {
         document.getElementsByClassName("mana-number")[0].innerHTML = charMana;
 
         //Habilitar botões
-        //for(let i = 0; i < 7; i++) {
-            //document.getElementsByTagName("button")[i].disabled = false;
-        //}
+        for(let i = 0; i < 7; i++) {
+            document.getElementsByTagName("button")[i].disabled = false;
+        }
     }
 
     setTimeout(enemyAttacks, 2000);
@@ -289,11 +306,11 @@ function skillsTurnsControlFunction() {
     if(skillsRounds.length === 0) {
         for(let i = 0; i < 6; i++) {
             document.getElementsByClassName("skill")[i].disabled = false; 
-            document.getElementsByClassName("skill")[i].style.filter = "brightness(100%)";
+            document.getElementsByClassName("skill")[i].style.filter = "none";
         }
     }
 }
 
 window.onload = () => {
-    let skillsTurnsControl = setInterval(skillsTurnsControlFunction, 200);
+    skillsTurnsControl = setInterval(skillsTurnsControlFunction, 200);
 }
