@@ -1,6 +1,5 @@
 
 
-
 function changeImg( classNumber ) {
 
     const imgs = 
@@ -12,7 +11,6 @@ function changeImg( classNumber ) {
         "../img/demon-front.png",
         "../img/ninja-front.png"
     ];
-
 
     //Mudar imagem
     document.getElementsByClassName("heroes-details-img")[0].src = imgs[classNumber];

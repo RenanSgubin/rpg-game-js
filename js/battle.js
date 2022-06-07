@@ -64,16 +64,20 @@ let enemyLifeHealAuxTotal = 100;
 //Cura do inimigo
 let enemyHeal = 0;
 
+//Numero de rounds de skill do inimigo
+let roundsEnemy = 0;
+let roundsEnemySkill = 0;
+
 let enemySkills = 
     [                  
-        //Mana  Dano   Ex.Dam   Def   Cura 
-        [ 5,      5,     0,      0,     0  ], //Skill 1
-        [ 10,     10,    0,      0,     0  ], //Skill 2
-        [ 30,     0,     0,      30,    0  ], //Skill 3
-        [ 50,     40,    0,      0,     0  ], //Skill 4
-        [ 40,     0,     0,      0,     20 ], //Skill 5
-        [ 90,     80,    0,      0,     0  ], //Skill 6
-        [ 0,      0,     0,      0,     0  ]  //Caso a mana não seja suficiente
+        //Mana  Dano   Ex.Dam   Def   Cura   Rounds D.
+        [ 5,      5,     0,      0,     0,      0], //Skill 1
+        [ 20,     0,     0,      0,     10,     0], //Skill 2
+        [ 30,     0,     0,      30,    0,      3], //Skill 3
+        [ 50,     40,    0,      0,     0,      0], //Skill 4
+        [ 60,     50,    0,      0,     0,      0], //Skill 5
+        [ 90,     80,    0,      0,     0,      0], //Skill 6
+        [ 0,      0,     0,      0,     0,      0]  //Caso a mana não seja suficiente
     ];
 
 //Numero que vai decidir os ataques do inimigo
@@ -84,8 +88,6 @@ function useAttack( skillNumber ) {
     if(charTurn) { //Caso seja vez do jogador jogar
 
         roundsChar++;
-
-        skillsTurnsControl = setInterval(skillsTurnsControlFunction, 200);
  
         //Ver se a mana que a skill usa é maior que a mana do char
         if(skills[skillNumber][0] <= charMana) {
@@ -122,7 +124,7 @@ function useAttack( skillNumber ) {
         charHeal = skills[skillNumber][4];
         if(skillNumber === 2) {
             document.getElementsByClassName("life-width")[0].style.width = charLifeHealAuxTotal+skills[2][4]+"%";
-            document.getElementsByClassName("life-number")[0].innerHTML = parseFloat(charLifeHealAuxTotal+skills[2][4].toFixed(2));
+            document.getElementsByClassName("life-number")[0].innerHTML = charLifeHealAuxTotal+skills[2][4];
         }
         
         //Dano ao inimigo
@@ -175,7 +177,9 @@ function enemyTurn() {
     document.getElementsByClassName("pixel-right-arrow")[0].style.display = "block";
     document.getElementsByClassName("pixel-left-arrow")[0].style.display = "none";
 
-    //Verificar se a skill já bateu o número de rounds dela
+    roundsEnemy++;
+
+    //Verificar se a skill já bateu o número de rounds dela (Knight)
     if(roundsChar ===  skills[roundsCharSkill][5]) {
         roundsChar = 0;
         skillsRounds = [];
@@ -186,11 +190,8 @@ function enemyTurn() {
 
     //Desabilitar botões
     for(let i = 0; i < 7; i++) {
-        document.getElementsByTagName("button")[i].disabled = true;
+        document.getElementsByTagName("button")[i].style.zIndex = "-1";
     }
-
-    //Limpar intervalo
-    clearInterval(skillsTurnsControl);
 
     //Adicionar 10 de mana
     enemyMana+= 10;
@@ -202,15 +203,33 @@ function enemyTurn() {
     
     function enemyAttacks() {
         //Faz um calculo com a mana pra sortear uma skill que esteja dentro do limite da mana
-        enemySkillNumber = (enemyMana / 10) / 2;
+        enemySkillNumber = (enemyLifeHealAuxTotal / 10) / 2;
 
-        if(enemyLifeHealAuxTotal<= 40) {
-            enemySkillNumber = 4;
+        //Verificar se a skill é baseada em rounds (Inimigo)
+        if(enemySkills[Math.ceil(enemySkillNumber)][5] > 0) {
+            //Pegar o numero da skill de rounds
+            roundsEnemySkill = Math.ceil(enemySkillNumber);
+            roundsEnemy = 0;
 
-            if(enemyMana < enemySkills[Math.ceil(enemySkillNumber)][0]){
-                charTurn = true;
-                enemySkillNumber = 6;
+            //Verificar se a skill de rounds já chegou no limite (Inimigo)
+            if(roundsEnemy === enemySkills[roundsEnemySkill][5]) {
+                roundsEnemySkill = 0;
+                roundsEnemy = 0;
+                enemyDef = 15;
+                document.getElementsByClassName("enemy-defense-number").innerHTML = enemyDef;
             }
+
+            //Impedir que ele use a mesma skill duas vezes
+            if(enemySkillNumber === enemySkills[Math.ceil(enemySkillNumber)][5]) {
+                
+            }
+        }
+
+        console.log(roundsEnemy);
+
+        if(enemyMana < enemySkills[Math.ceil(enemySkillNumber)][0]){
+            charTurn = true;
+            enemySkillNumber = 6;
         }
      
         //Porcentagem da vida do Char
@@ -239,7 +258,8 @@ function enemyTurn() {
         enemySkills[Math.ceil(enemySkillNumber)][2];
 
         //Def Extra
-        enemySkills[Math.ceil(enemySkillNumber)][3];
+        enemyDef = enemyDef + (enemySkills[Math.ceil(enemySkillNumber)][3]) / 100 * 100;
+        document.getElementsByClassName("enemy-defense-number")[0].innerHTML = enemyDef;
 
         //Cura
         document.getElementsByClassName("life-width")[1].style.width = enemyLifeHealAuxTotal+enemySkills[Math.ceil(enemySkillNumber)][4]+"%";
@@ -266,12 +286,11 @@ function enemyTurn() {
 
         //Habilitar botões
         for(let i = 0; i < 7; i++) {
-            document.getElementsByTagName("button")[i].disabled = false;
+            document.getElementsByTagName("button")[i].style.zIndex = "";
         }
     }
 
     setTimeout(enemyAttacks, 2000);
-
 }
 
 if(charTurn) {
@@ -295,7 +314,6 @@ function passTurn() {
 }
 
 function skillsTurnsControlFunction() {
-
     for(let i = 0; i < skillsRounds.length; i++) {
         document.getElementsByClassName("skill")[skillsRounds[i]].disabled = true; 
         document.getElementsByClassName("skill")[skillsRounds[i]].style.filter = "brightness(60%)";
