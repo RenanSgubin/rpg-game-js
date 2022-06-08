@@ -39,7 +39,7 @@ let skills =
         [ 30,     0,     0,      0,    20,      0,        "#b8b8b8"  ], //Skill 3
         [ 40,     0,     80,     0,    0,       3,        "#9f1010"  ], //Skill 4
         [ 50,     0,     100,    0,    0,       3,        "#09102b"  ],  //Skill 5
-        [ 70,     0,     70,     30,   0,       3,        "rgb(123, 59, 2)"  ] //Skill 6
+        [ 70,     0,     55,     30,   0,       3,        "rgb(123, 59, 2)"  ] //Skill 6
     ];
 
 //Posição do dano que o char da no inimigo
@@ -68,13 +68,16 @@ let enemyHeal = 0;
 let roundsEnemy = 0;
 let roundsEnemySkill = 0;
 
+//Auxiliadora para impedir que o inimigo use a mesma skill 2 vezes
+let enemyRoundsSkillControl = 0;
+
 let enemySkills = 
     [                  
         //Mana  Dano   Ex.Dam   Def   Cura   Rounds D.
         [ 5,      5,     0,      0,     0,      0], //Skill 1
         [ 20,     0,     0,      0,     10,     0], //Skill 2
-        [ 30,     0,     0,      30,    0,      3], //Skill 3
-        [ 50,     40,    0,      0,     0,      0], //Skill 4
+        [ 50,     40,    0,      0,     0,      0], //Skill 3
+        [ 30,     0,     0,      30,    0,      3], //Skill 4
         [ 60,     50,    0,      0,     0,      0], //Skill 5
         [ 90,     80,    0,      0,     0,      0], //Skill 6
         [ 0,      0,     0,      0,     0,      0]  //Caso a mana não seja suficiente
@@ -177,8 +180,6 @@ function enemyTurn() {
     document.getElementsByClassName("pixel-right-arrow")[0].style.display = "block";
     document.getElementsByClassName("pixel-left-arrow")[0].style.display = "none";
 
-    roundsEnemy++;
-
     //Verificar se a skill já bateu o número de rounds dela (Knight)
     if(roundsChar ===  skills[roundsCharSkill][5]) {
         roundsChar = 0;
@@ -202,31 +203,42 @@ function enemyTurn() {
     document.getElementsByClassName("mana-number")[1].innerHTML = enemyMana;
     
     function enemyAttacks() {
-        //Faz um calculo com a mana pra sortear uma skill que esteja dentro do limite da mana
+        //Faz um calculo com a vida pra sortear uma skill
         enemySkillNumber = (enemyLifeHealAuxTotal / 10) / 2;
 
         //Verificar se a skill é baseada em rounds (Inimigo)
         if(enemySkills[Math.ceil(enemySkillNumber)][5] > 0) {
+
+            roundsEnemy++;
+
+            console.log(roundsEnemy);
+
             //Pegar o numero da skill de rounds
             roundsEnemySkill = Math.ceil(enemySkillNumber);
-            roundsEnemy = 0;
+            let roundSkillNumber = enemySkills[roundsEnemySkill][5];
+
+            //Impedir que use várias skills de rounds seguidas
+            if(enemySkills[Math.ceil(enemySkillNumber)][5] > 0 && enemyRoundsSkillControl != 0) {
+                enemyRoundsSkillControl = 0;
+                enemySkillNumber = 0; //Mexer
+            }
+
+            enemyRoundsSkillControl++;
 
             //Verificar se a skill de rounds já chegou no limite (Inimigo)
-            if(roundsEnemy === enemySkills[roundsEnemySkill][5]) {
+            if(roundsEnemy-1 === roundSkillNumber) {
                 roundsEnemySkill = 0;
                 roundsEnemy = 0;
+                roundSkillNumber = 0;
+                enemyRoundsSkillControl = 0;
                 enemyDef = 15;
                 document.getElementsByClassName("enemy-defense-number").innerHTML = enemyDef;
+                alert("CABOO");
             }
 
-            //Impedir que ele use a mesma skill duas vezes
-            if(enemySkillNumber === enemySkills[Math.ceil(enemySkillNumber)][5]) {
-                
-            }
         }
 
-        console.log(roundsEnemy);
-
+        //Caso não tenha mana
         if(enemyMana < enemySkills[Math.ceil(enemySkillNumber)][0]){
             charTurn = true;
             enemySkillNumber = 6;
