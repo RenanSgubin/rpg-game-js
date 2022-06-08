@@ -34,12 +34,12 @@ let skillsRounds = [];
 let skills = 
     [                  
         //Mana  Dano   Ex.Dam   Def   Cura  Rounds dura   Cor dano
-        [ 10,     10,    1,      0,    0,       0,        "#b8b8b8"  ], //Skill 1
-        [ 20,     0,     1,      50,   0,       3,        "#b8b8b8"  ], //Skill 2
-        [ 30,     0,     0,      0,    20,      0,        "#b8b8b8"  ], //Skill 3
+        [ 10,    8.5,    1,      0,    0,       0,       "#b8b8b8"  ], //Skill 1
+        [ 20,     0,     1,      50,   0,       3,        "#f05c17"  ], //Skill 2
+        [ 30,     0,     0,      0,    20,      0,        "rgb(76, 201, 124)"  ], //Skill 3
         [ 40,     0,     80,     0,    0,       3,        "#9f1010"  ], //Skill 4
-        [ 50,     0,     100,    0,    0,       3,        "#09102b"  ],  //Skill 5
-        [ 70,     0,     55,     30,   0,       3,        "rgb(123, 59, 2)"  ] //Skill 6
+        [ 50,     0,     100,    0,    0,       3,        "#9f1010" ],  //Skill 5
+        [ 70,     0,     55,     30,   0,       3,        "#9f1010"  ] //Skill 6
     ];
 
 //Posição do dano que o char da no inimigo
@@ -71,13 +71,16 @@ let roundsEnemySkill = 0;
 //Auxiliadora para impedir que o inimigo use a mesma skill 2 vezes
 let enemyRoundsSkillControl = 0;
 
+//Variável que vai fazer com que o inimigo não fique usando a skill de cura
+let enemyHealControl = 0;
+
 let enemySkills = 
     [                  
         //Mana  Dano   Ex.Dam   Def   Cura   Rounds D.
         [ 5,      5,     0,      0,     0,      0], //Skill 1
         [ 20,     0,     0,      0,     10,     0], //Skill 2
         [ 50,     40,    0,      0,     0,      0], //Skill 3
-        [ 30,     0,     0,      30,    0,      3], //Skill 4
+        [ 30,     0,     0,      200,    0,     3], //Skill 4
         [ 60,     50,    0,      0,     0,      0], //Skill 5
         [ 90,     80,    0,      0,     0,      0], //Skill 6
         [ 0,      0,     0,      0,     0,      0]  //Caso a mana não seja suficiente
@@ -109,6 +112,11 @@ function useAttack( skillNumber ) {
             document.getElementsByClassName("enemy-damage")[0].style.color = skills[skillNumber][6];
         }
 
+        if(skillNumber === 1) {
+            //Colocar cor no dano
+            document.getElementsByClassName("enemy-damage")[0].style.color = "#b8b8b8";
+        }
+
         //Voltar a cor do texto padrão
         if(roundsChar > skills[roundsCharSkill][5]) {
             document.getElementsByClassName("enemy-damage")[0].style.color = "#b8b8b8";
@@ -123,11 +131,47 @@ function useAttack( skillNumber ) {
         charDef = charDef + ((charDef / 100) * skills[skillNumber][3]);
         document.getElementsByClassName("char-defense-number")[0].innerHTML = charDef;
 
+        //Aparecer buff de defesa
+        if(skills[skillNumber][3] > 0) {
+            //Aparecer dano no inimigo
+            document.getElementsByClassName("char-damage")[0].style.display = "flex"; 
+            document.getElementsByClassName("char-damage")[0].innerHTML = "+"+skills[skillNumber][3]+"%"+" Def";   
+            document.getElementsByClassName("char-damage")[0].style.color = skills[1][6];  
+
+            document.getElementsByClassName("char-damage")[0].style.animation = "damageShake linear 300ms";
+
+            let showDamage = setTimeout(function() {
+                document.getElementsByClassName("char-damage")[0].style.display = "none";
+            }, 1500);
+        }
+
         //Curar
         charHeal = skills[skillNumber][4];
         if(skillNumber === 2) {
-            document.getElementsByClassName("life-width")[0].style.width = charLifeHealAuxTotal+skills[2][4]+"%";
-            document.getElementsByClassName("life-number")[0].innerHTML = charLifeHealAuxTotal+skills[2][4];
+            if(charLifeHealAuxTotal >= 100) {
+                charLifeHealAuxTotal = 100;
+                charHeal = 0;
+                document.getElementsByClassName("life-width")[0].style.width = charLifeHealAuxTotal+"%";
+                document.getElementsByClassName("life-number")[0].innerHTML = charLifeHealAuxTotal;
+            }
+            else {
+                document.getElementsByClassName("life-width")[0].style.width = charLifeHealAuxTotal+skills[2][4]+"%";
+                document.getElementsByClassName("life-number")[0].innerHTML = charLifeHealAuxTotal+skills[2][4];
+            }
+        }
+
+        //Aparecer cura
+        if(charHeal > 0) {
+            //Aparecer dano no inimigo
+            document.getElementsByClassName("char-damage")[0].style.display = "flex"; 
+            document.getElementsByClassName("char-damage")[0].innerHTML = "+"+charHeal;   
+            document.getElementsByClassName("char-damage")[0].style.color = skills[2][6];  
+
+            document.getElementsByClassName("char-damage")[0].style.animation = "damageShake linear 300ms";
+
+            let showDamage = setTimeout(function() {
+                document.getElementsByClassName("char-damage")[0].style.display = "none";
+            }, 1500);
         }
         
         //Dano ao inimigo
@@ -208,10 +252,7 @@ function enemyTurn() {
 
         //Verificar se a skill é baseada em rounds (Inimigo)
         if(enemySkills[Math.ceil(enemySkillNumber)][5] > 0) {
-
             roundsEnemy++;
-
-            console.log(roundsEnemy);
 
             //Pegar o numero da skill de rounds
             roundsEnemySkill = Math.ceil(enemySkillNumber);
@@ -220,22 +261,28 @@ function enemyTurn() {
             //Impedir que use várias skills de rounds seguidas
             if(enemySkills[Math.ceil(enemySkillNumber)][5] > 0 && enemyRoundsSkillControl != 0) {
                 enemyRoundsSkillControl = 0;
-                enemySkillNumber = 0; //Mexer
+                enemySkillNumber = 0;
             }
 
             enemyRoundsSkillControl++;
 
             //Verificar se a skill de rounds já chegou no limite (Inimigo)
-            if(roundsEnemy-1 === roundSkillNumber) {
+            if(roundsEnemy === roundSkillNumber) {
                 roundsEnemySkill = 0;
                 roundsEnemy = 0;
                 roundSkillNumber = 0;
                 enemyRoundsSkillControl = 0;
                 enemyDef = 15;
                 document.getElementsByClassName("enemy-defense-number").innerHTML = enemyDef;
-                alert("CABOO");
             }
 
+        }
+
+        let enemyHealControlCond = Math.ceil(enemySkillNumber) === 1 ? enemyHealControl++ : enemyHealControl = 0;
+
+        if(Math.ceil(enemySkillNumber) === 1 && enemyHealControl === 2) {
+            enemySkillNumber = 0;
+            enemyHealControl = 0;
         }
 
         //Caso não tenha mana
@@ -261,6 +308,7 @@ function enemyTurn() {
         //Aparecer dano no jogador
         document.getElementsByClassName("char-damage")[0].innerHTML = "-" + parseFloat(enemyDamage.toFixed(2));;
         document.getElementsByClassName("char-damage")[0].style.display= "flex";
+        document.getElementsByClassName("char-damage")[0].style.color = "#b8b8b8";
         document.getElementsByClassName("char-damage")[0].style.animation = "damageShake linear 300ms";
         let showDamage = setTimeout(function() {
             document.getElementsByClassName("char-damage")[0].style.display = "none";
@@ -270,8 +318,21 @@ function enemyTurn() {
         enemySkills[Math.ceil(enemySkillNumber)][2];
 
         //Def Extra
-        enemyDef = enemyDef + (enemySkills[Math.ceil(enemySkillNumber)][3]) / 100 * 100;
+        enemyDef = enemyDef + ((enemyDef / 100) * enemySkills[Math.ceil(enemySkillNumber)][3]);
         document.getElementsByClassName("enemy-defense-number")[0].innerHTML = enemyDef;
+
+        //Aparecer buff de defesa
+        if(enemySkills[Math.ceil(enemySkillNumber)][3] > 0) {
+            document.getElementsByClassName("enemy-damage")[0].style.display = "flex"; 
+            document.getElementsByClassName("enemy-damage")[0].innerHTML = "+"+enemySkills[3][3]+"%"+" Def";   
+            document.getElementsByClassName("enemy-damage")[0].style.color = skills[1][6];  
+
+            document.getElementsByClassName("enemy-damage")[0].style.animation = "damageShake linear 300ms";
+
+            let showDamage = setTimeout(function() {
+                document.getElementsByClassName("enemy-damage")[0].style.display = "none";
+            }, 1500);
+        }
 
         //Cura
         document.getElementsByClassName("life-width")[1].style.width = enemyLifeHealAuxTotal+enemySkills[Math.ceil(enemySkillNumber)][4]+"%";
@@ -317,8 +378,6 @@ function passTurn() {
     charTurn = false;
     enemyTurn();
 
-    //Desabilitar botão
-    //document.getElementsByClassName("pass-turn")[0].disabled = true;
     //Mostrar Seta do personagem
     document.getElementsByClassName("pixel-left-arrow")[0].style.display = "none"; 
     //Tirar seta do inimigo

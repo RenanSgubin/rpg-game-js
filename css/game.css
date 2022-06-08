@@ -226,18 +226,16 @@ body {
 .char-damage {
     display: none;
     position: absolute;
-    right: 25%;
-    top: 40%;
-    color: #b8b8b8;
+    right: 20%;
+    top: 28%;
     font-size: 3.3rem;
     z-index: 9999;
 }
 
 .enemy-damage {
     position: absolute;
-    left: 25%;
-    top: 40%;
-    color: #b8b8b8;
+    left: 20%;
+    top: 28%;
     font-size: 3.3rem;
     z-index: 9999;
 }
@@ -333,7 +331,7 @@ body {
 
 .atks-img {
     width: 80px;
-    border: 2px solid rgb(239, 238, 238);
+    border: 2px solid rgb(238, 239, 238);
 }
 
 .skill-description {
