@@ -207,6 +207,8 @@ function useAttack( skillNumber ) {
     
                 document.getElementsByClassName("enemy")[0].style.filter = "blur(3px) brightness(20%)";
                 document.getElementsByClassName("character")[0].style.filter = "blur(3px) brightness(20%)";
+                document.getElementsByClassName("enemy")[0].style.zIndex = "-1";
+                document.getElementsByClassName("character")[0].style.zIndex = "-1";
             }
         }
         }else {
@@ -373,7 +375,7 @@ function enemyTurn() {
         charTurn = true;
 
         //Adicionar mana para o jogador a cada round
-        charMana = charMana + 8;
+        charMana = charMana + 10;
         if(charMana > 100){
             charMana = 100;
         }
