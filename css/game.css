@@ -14,6 +14,11 @@ body {
     font-family: "Pixel Title";
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 .game-wallpaper {
     position: absolute;
     top: 0%;
@@ -513,6 +518,135 @@ body {
     font-size: 5.5rem;
     color: rgb(2, 88, 164);
     transform: rotate(-10deg);
+}
+
+
+/*Div que vai aparecer quando o jogo terminar*/
+.end-game {
+    position: absolute;
+    left: 50%;
+    top: -150%;
+    transform: translate(-50%,-50%);
+    width: 500px;
+    height: 400px;
+    background-color: rgb(217, 217, 217);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 99999;
+    transition: 0.6s all;
+}
+
+.end-game ::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background:rgb(217, 217, 217);
+    z-index: -1;
+}
+  
+.end-game ::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background:rgb(217, 217, 217);
+    z-index: -1;
+}
+
+.title-end-game {
+    position: absolute;
+    top: 0%;
+    width: 105%;
+    height: 60px;
+    background-color: #3d3d3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999999;
+    font-size: 1.4rem;
+}
+
+.title-end-game::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: #3d3d3d;
+    z-index: -1;
+}
+  
+.title-end-game::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: #3d3d3d;
+    z-index: -1;
+}
+
+.end-game-buttons-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.end-game-buttons {
+    position: relative;
+    width: 70%;
+    height: 95px;
+    background-color: #3d3d3d;
+    border: 0;
+    z-index: 9999;
+    margin: 15px;
+    font-family: "Pixel Title";
+    font-size: 1.2rem;
+    transition: 0.2s all;
+    cursor: pointer;
+}
+
+.end-game-buttons::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: #3d3d3d;
+    z-index: -1;
+}
+  
+.end-game-buttons::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    background: #3d3d3d;
+    z-index: -1;
+}
+
+.end-game-buttons:hover {
+    transform: scale(1.03);
 }
 
 @keyframes outOfMana {

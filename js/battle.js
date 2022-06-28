@@ -34,7 +34,7 @@ let skillsRounds = [];
 let skills = 
     [                  
         //Mana  Dano   Ex.Dam   Def   Cura  Rounds dura   Cor dano
-        [ 10,    8.5,    1,      0,    0,       0,       "#b8b8b8"  ], //Skill 1
+        [ 10,     8.5,   1,      0,    0,       0,        "#b8b8b8"  ], //Skill 1
         [ 20,     0,     1,      50,   0,       3,        "#f05c17"  ], //Skill 2
         [ 30,     0,     0,      0,    20,      0,        "rgb(76, 201, 124)"  ], //Skill 3
         [ 40,     0,     80,     0,    0,       3,        "#9f1010"  ], //Skill 4
@@ -198,6 +198,16 @@ function useAttack( skillNumber ) {
             let showDamage = setTimeout(function() {
                 document.getElementsByClassName("enemy-damage")[0].style.display = "none";
             }, 1500);
+
+            if(parseFloat(enemyLifeHealAuxTotal.toFixed(2)) <= 0) {
+                document.getElementsByClassName("title-end-game")[0].innerHTML = "You Won!";
+                document.getElementsByClassName("life-width")[1].style.width = 0+"%";
+                document.getElementsByClassName("life-number")[1].innerHTML = 0;
+                document.getElementsByClassName("end-game")[0].style.top = "50%";
+    
+                document.getElementsByClassName("enemy")[0].style.filter = "blur(3px) brightness(20%)";
+                document.getElementsByClassName("character")[0].style.filter = "blur(3px) brightness(20%)";
+            }
         }
         }else {
             //Sem mana
@@ -234,9 +244,12 @@ function enemyTurn() {
     }
 
     //Desabilitar botões
-    for(let i = 0; i < 7; i++) {
+    for(let i = 0; i < 6; i++) {
         document.getElementsByTagName("button")[i].style.zIndex = "-1";
     }
+
+    //Desabilitar botão de passar turno
+    document.getElementsByClassName("pass-turn")[0].disabled = true;
 
     //Adicionar 10 de mana
     enemyMana+= 10;
@@ -300,7 +313,17 @@ function enemyTurn() {
         charLifeHealAuxTotal = 100 - charLifeHealAux;
         charHeal = 0;
         document.getElementsByClassName("life-width")[0].style.width = charLifeHealAuxTotal+"%";
-        document.getElementsByClassName("life-number")[0].innerHTML = parseFloat(charLifeHealAuxTotal.toFixed(2));         
+        document.getElementsByClassName("life-number")[0].innerHTML = parseFloat(charLifeHealAuxTotal.toFixed(2));    
+
+        if(parseFloat(charLifeHealAuxTotal.toFixed(2)) <= 0) {
+            document.getElementsByClassName("title-end-game")[0].innerHTML = "You Lose!";
+            document.getElementsByClassName("life-width")[0].style.width = 0+"%";
+            document.getElementsByClassName("life-number")[0].innerHTML = 0;
+            document.getElementsByClassName("end-game")[0].style.top = "50%";
+
+            document.getElementsByClassName("enemy")[0].style.filter = "blur(3px) brightness(20%)";
+            document.getElementsByClassName("character")[0].style.filter = "blur(3px) brightness(20%)";
+        }
 
         //Tirar mana
         enemyMana = enemyMana - enemySkills[Math.ceil(enemySkillNumber)][0];
@@ -361,6 +384,9 @@ function enemyTurn() {
         for(let i = 0; i < 7; i++) {
             document.getElementsByTagName("button")[i].style.zIndex = "";
         }
+
+        //Habilitar botão de passar turno
+        document.getElementsByClassName("pass-turn")[0].disabled = false;
     }
 
     setTimeout(enemyAttacks, 2000);
