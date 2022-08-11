@@ -4,6 +4,8 @@
   src: url('../fonts/upheavtt-webfont.woff2');
 }
 
+@import url("reset.css");
+
 body {
   margin: 0;
   padding: 0;
@@ -19,11 +21,6 @@ body {
   width: 7px;
   height: 7px;
   background-color: white;
-}
-
-a {
-  color: black;
-  text-decoration: none;
 }
 
 .container {

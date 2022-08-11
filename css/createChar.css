@@ -5,20 +5,10 @@
     src: url('../fonts/upheavtt-webfont.woff2');
 }
 
-body {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    box-sizing: border-box;
-    background-color: rgb(34, 34, 34);
-    font-family: "Pixel Title";
-    /*background-image: url("../img/pixel-cavern.png");
-    background-size: 100%;*/
-}
+@import url("reset.css");
 
-a {
-    text-decoration: none;
-    color: rgb(34, 34, 34);
+body {
+    background-color: rgb(34, 34, 34);
 }
 
 .container {

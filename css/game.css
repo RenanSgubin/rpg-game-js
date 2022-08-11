@@ -6,18 +6,7 @@
     src: url('../fonts/upheavtt-webfont.woff2');
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    box-sizing: border-box;
-    font-family: "Pixel Title";
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
+@import url("reset.css");
 
 .game-wallpaper {
     position: absolute;
